@@ -70,18 +70,20 @@ for image_name in image_files:
         assert len(masks) == len(scores)
         if len(scores) > 0:
 
-            results = draw_segmentation_map(orig_image, masks, boxes, labels)
+            result = draw_segmentation_map(orig_image, masks, boxes, labels)
         
-            if len(results) > 1:
-                for i, result in enumerate(results):
-                    name = image_name.split(".jpg")[0] + f"_{i}.png"
-                    save_path = os.path.join(args['out_dir'], name)
-                    cv2.imwrite(save_path, result)
-                list_multi_pizza_images.append(image_name)
-            else:
-                image_name = image_name.replace(".jpg", ".png")
-                save_path = os.path.join(args['out_dir'], image_name)
-                cv2.imwrite(save_path, results[0])
+#             if len(results) > 1:
+#                 for i, result in enumerate(results):
+#                     name = image_name.split(".jpg")[0] + f"_{i}.png"
+#                     save_path = os.path.join(args['out_dir'], name)
+#                     cv2.imwrite(save_path, result)
+#                 list_multi_pizza_images.append(image_name)
+#             else:
+            image_name = image_name.replace(".jpg", ".png")
+            save_path = os.path.join(args['out_dir'], image_name)
+#             cv2.imwrite(save_path, results[0])
+            cv2.imwrite(save_path, result)
+            
                 
             blurred_files.append(image_name)
 
@@ -106,12 +108,12 @@ with open("error_files.txt", "w") as file:
     for x in error_files:
         file.write(x + "\n")
 
-with open("multi_pizza_images.txt", "w") as file:
-    for x in list_multi_pizza_images:
-        file.write(x + "\n")
+# with open("multi_pizza_images.txt", "w") as file:
+#     for x in list_multi_pizza_images:
+#         file.write(x + "\n")
         
 print("Finished!!")
 print("len(blurred_files) = ", {len(blurred_files)})
 print("len(not_blurred_list) = ", {len(not_blurred_files)})      
 print("len(error_files) = ", {len(error_files)})      
-print("Images with multiple pizzas: ", len(list_multi_pizza_images))
+# print("Images with multiple pizzas: ", len(list_multi_pizza_images))

@@ -53,19 +53,19 @@ def get_outputs(image, model, threshold):
     return only_pizza_masks, only_pizza_boxes, only_pizza_labels, only_pizza_scores
 
 def draw_segmentation_map(image, masks, boxes, labels):
-    results = []
+#     results = []
     image = np.array(image)
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     all_blur = cv2.blur(image, (50,50), 0)
     for i in range(len(masks)):
         # add unblurred pizzas iteratively to the all_blur image
-        #all_blur[masks[i]>0] = image[masks[i]>0]
+        all_blur[masks[i]>0] = image[masks[i]>0]
         
         # Changing logic:- Now, each image should have only 1 pizza.
         # Un-blur 1 pizza at a time and keep rest blurred.
-        temp = all_blur.copy()
-        temp[masks[i]>0] = image[masks[i]>0]
-        results.append(temp)
+        # temp = all_blur.copy()
+        # temp[masks[i]>0] = image[masks[i]>0]
+        # results.append(temp)
     
-    return results
+    return all_blur
 
